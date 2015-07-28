@@ -1,0 +1,34 @@
+{
+  "name": "FontCDN",
+  "version": "1.0.0",
+  "authors": [
+    "Thomas Park <thomas@thomaspark.co>"
+  ],
+  "description": "Search Tool for Google Fonts",
+  "main": "build/app.js",
+  "keywords": [
+    "google",
+    "fonts",
+    "web",
+    "fonts",
+    "search",
+    "react",
+    "typography"
+  ],
+  "license": "MIT",
+  "homepage": "http://fontcdn.org",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.3.0",
+    "react-infinite": "~0.4.1",
+    "react": "~0.13.3",
+    "jquery": "~2.1.4",
+    "underscore": "~1.8.3"
+  }
+}

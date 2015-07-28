@@ -1,0 +1,43 @@
+{
+  "name": "react-infinite",
+  "authors": [
+    "Gareth Tan <garethwtan@gmail.com>"
+  ],
+  "description": "A browser-ready efficient scrolling container based on UITableView",
+  "main": "dist/react-infinite.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "react",
+    "react-component",
+    "scrolling",
+    "uitableview",
+    "infinite"
+  ],
+  "license": "BSD2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": ">= 0.12.2"
+  },
+  "homepage": "https://github.com/seatgeek/react-infinite",
+  "version": "0.4.1",
+  "_release": "0.4.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.4.1",
+    "commit": "25ff201878b8edfbf23fc83f2e635621e90585e0"
+  },
+  "_source": "git://github.com/seatgeek/react-infinite.git",
+  "_target": "~0.4.1",
+  "_originalSource": "react-infinite",
+  "_direct": true
+}
