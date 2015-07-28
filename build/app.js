@@ -88,12 +88,15 @@ var Font = React.createClass({displayName: "Font",
 
 var FontPreview = React.createClass({displayName: "FontPreview",
   render: function() {
-    var fontFamily = this.props.font.family;
     var text = this.props.text;
-
+    var fontFamily = this.props.font.family;
     var style = {
       fontFamily: "'" + fontFamily + "'"
     };
+
+    if (text == "Font Name") {
+      text = fontFamily;
+    }
 
     return (
       React.createElement("div", {className: "preview", style: style}, 

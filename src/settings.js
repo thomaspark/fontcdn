@@ -135,7 +135,7 @@ var Display = React.createClass({
     }
   },
   handleSizeChange: function(event) {
-    var size = event.target.value + "px";
+    var size = $(event.target).val() + "px";
     $(".fonts").css("font-size", size);
   },
   invert: function(event) {
@@ -168,6 +168,7 @@ var Text = React.createClass({
     return {
       texts: [
                 "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz 0123456789",
+                "Font Name",
                 "Grumpy wizards make toxic brew for the evil Queen and Jack.",
                 "Bright vixens jump dozy fowl quack",
                 "Waltz bad nymph for quick jugs vex",
