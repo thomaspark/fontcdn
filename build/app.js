@@ -108,10 +108,19 @@ var FontPreview = React.createClass({displayName: "FontPreview",
 
 var FontMeta = React.createClass({displayName: "FontMeta",
   render: function() {
+    var variants = this.props.font.variants.length;
+    var text = this.props.font.family + ' - ' + variants;
+
+    if (variants == 1) {
+      text = text + ' Style';
+    } else {
+      text = text + ' Styles';
+    }
+
     return (
       React.createElement("div", {className: "meta"}, 
         React.createElement("span", {className: "family"}, 
-           this.props.font.family
+           text
         )
       )
     );
