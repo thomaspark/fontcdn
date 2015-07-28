@@ -32,7 +32,7 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <Filters onChange={this.getSettings} />
+        <Settings onChange={this.getSettings} />
         <InfiniteList sort={this.state.sort} category={this.state.category} display={this.state.display} search={this.state.search} text={this.state.text} suggestions={this.state.suggestions} groupSize={this.state.groupSize} />
       </div>
     );

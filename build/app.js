@@ -32,7 +32,7 @@ var App = React.createClass({displayName: "App",
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement(Filters, {onChange: this.getSettings}), 
+        React.createElement(Settings, {onChange: this.getSettings}), 
         React.createElement(InfiniteList, {sort: this.state.sort, category: this.state.category, display: this.state.display, search: this.state.search, text: this.state.text, suggestions: this.state.suggestions, groupSize: this.state.groupSize})
       )
     );

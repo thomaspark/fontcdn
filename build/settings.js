@@ -1,6 +1,6 @@
 // jshint ignore: start
 
-var Filters = React.createClass({displayName: "Filters",
+var Settings = React.createClass({displayName: "Settings",
   changeSearch: function(value) {
     this.props.onChange("search", value);
   },
