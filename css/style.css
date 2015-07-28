@@ -56,7 +56,6 @@ input[type="text"],
 input[type="search"] {
   width: 100%;
   padding: 6px 6px 5px 6px;
-  background-color: #B0BEC5;
   background-color: #fff;
   border: none;
   border-radius: 3px;
@@ -73,8 +72,9 @@ input[type="search"]:focus {
 
 input[type="range"] {
   width: 100%;
-  margin-top: 8px;
+  margin: 8px 0 0;
   outline: none;
+  background: none;
   -webkit-appearance: none;
 }
 
@@ -84,20 +84,26 @@ input[type="search"]::-webkit-search-decoration {
 
 input[type=range]::-webkit-slider-runnable-track {
   height: 6px;
-  background-color: #B0BEC5;
-  background-color: #7596BB;
-  background-color: #75A0C7;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
 }
 
 input[type=range]::-webkit-slider-thumb {
   margin-top: -4px;
 }
 
+input[type=range]::-moz-range-track {
+  height: 6px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 3px;
+}
+
 .btn {
   display: inline-block;
   margin: 0 4px 4px 0;
   padding: 6px 8px;
-  background-color: #0E4D79;
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 6px;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
@@ -107,9 +113,13 @@ input[type=range]::-webkit-slider-thumb {
   cursor: pointer;
 }
 
+.btn:hover {
+  color: #fff;
+}
+
 .btn.active {
-  background-color: rgba(255, 255, 255, 0.6);
-  color: #1B3E65;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
 }
 
 .btn .fa {
@@ -137,7 +147,7 @@ input[type=range]::-webkit-slider-thumb {
   padding: 0 20px;
   overflow-y: auto;
   background-color: #1263A1;
-  color: #AABFD5;
+  color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   font-weight: 300;
 }
@@ -175,7 +185,7 @@ input[type=range]::-webkit-slider-thumb {
   height: 26px;
   padding: 6px 8px;
   margin: 0;
-  background-color: #0E4D79;
+  background-color: rgba(0, 0, 0, 0.3);
   border-radius: 0 3px 3px 0;
   font-size: 12px;
   color: rgba(255, 255, 255, 0.6);
@@ -183,7 +193,6 @@ input[type=range]::-webkit-slider-thumb {
   -moz-user-select: none;
   user-select: none;
   cursor: pointer;
-  transition: color 0.3s
 }
 
 .text .refresh:hover {
@@ -293,7 +302,7 @@ body.invert .font .preview {
   background-color: #9BAEAF;
   background: none;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 300;
   color: #888;
 }
 
