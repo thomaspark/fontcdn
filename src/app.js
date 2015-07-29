@@ -5,6 +5,7 @@ var App = React.createClass({
     return {
       data: [],
       search: '',
+      font: {family: '', variants: [], subsets: []},
       display: 'grid',
       groupSize: 900,
       sort: 'popularity',
@@ -29,17 +30,42 @@ var App = React.createClass({
       }
     }
   },
+  closeModal: function() {
+    $('.modal').removeClass('show');
+  },
+  modal: function(font) {
+    var that = this;
+    var fonts = [];
+    fonts.push(font.family + ':' + font.variants.join(','));
+
+    WebFont.load({
+      classes: false,
+      google: {
+        families: fonts
+      },
+      active: function() {
+        that.setState({font: font});
+        $('.modal')
+          .addClass('show')
+          .find('input[type="checkbox"]').attr('checked', false);
+      }
+    });
+  },
   render: function() {
     return (
       <div>
         <Settings onChange={this.getSettings} />
-        <InfiniteList sort={this.state.sort} category={this.state.category} display={this.state.display} search={this.state.search} text={this.state.text} suggestions={this.state.suggestions} groupSize={this.state.groupSize} />
+        <Modal font={this.state.font} onClose={this.closeModal} />
+        <InfiniteList sort={this.state.sort} category={this.state.category} display={this.state.display} search={this.state.search} text={this.state.text} suggestions={this.state.suggestions} groupSize={this.state.groupSize} setModal={this.modal} />
       </div>
     );
   }
 });
 
 var FontGroup = React.createClass({
+  modal: function(value) {
+    this.props.setModal(value);
+  },
   render: function() {
     var text = $('.text input').val();
     var num = this.props.num;
@@ -52,7 +78,7 @@ var FontGroup = React.createClass({
 
     while (fonts.length > 0) {
       var font = fonts.shift();
-      children.push(<Font font={font} text={text} />);
+      children.push(<Font font={font} text={text} setModal={this.modal} />);
       if (children.length == 4) {
         groups.push(<div className="fontrow">{children}</div>);
         children = [];
@@ -72,12 +98,15 @@ var FontGroup = React.createClass({
 });
 
 var Font = React.createClass({
+  modal: function() {
+    this.props.setModal(this.props.font);
+  },
   render: function() {
     var text = this.props.text;
 
     return (
       <div className="font">
-        <div className="content">
+        <div className="content" onClick={this.modal} >
           <FontPreview font={this.props.font} text={text} />
           <FontMeta font={this.props.font} num={this.props.num} />
         </div>
@@ -127,6 +156,156 @@ var FontMeta = React.createClass({
   }
 });
 
+var Modal = React.createClass({
+  getInitialState: function() {
+    return {
+      variants: '',
+      subsets: ''
+    }
+  },
+  componentDidMount: function() {
+    var that = this;
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27) {
+        that.fade();
+      }
+    });
+
+    $('.modal input[type=text]').click(function() {
+       $(this).select();
+    });
+  },
+  fade: function(e) {
+    if ((!e) || (e && $(e.target).hasClass('modal'))) {
+      $(React.findDOMNode(this)).removeClass('show');
+      this.setState({variants: '', subsets: ''});
+    }
+  },
+  setVariants: function(e) {
+    var variants = [];
+    $('.variants input:checked').each(function() {
+      variants.push($(this).val());
+    });
+
+    this.setState({'variants': variants.join(',')});
+  },
+  setSubsets: function(e) {
+    var subsets = [];
+    $('.subsets input:checked').each(function() {
+      subsets.push($(this).val());
+    });
+
+    this.setState({'subsets': subsets.join(',')});
+  },
+  render: function() {
+
+    if (this.props.show == false) {
+      return false;
+    }
+
+    var that = this;
+    var font = this.props.font;
+    var family = font.family.replace(/ /g, '+');
+    var url = 'https://fonts.googleapis.com/css?family=' + family;
+    var category = font.category;
+    var value =  '\'' + font.family + '\', ' + category;
+
+    if (category == 'display' || category == 'handwriting') {
+      category = 'cursive';
+    }
+
+    if (this.state.variants.length > 0) {
+      url = url + ':' + this.state.variants;
+    }
+
+    if (this.state.subsets.length > 0) {
+      url = url + '&subset=' + this.state.subsets;
+    }
+
+    var html = '<link href=\'' + url + '\' rel=\'stylesheet\' type=\'text/css\'>';
+    var css = '@import url(' + url + ');';
+    var rule = 'font-family: ' + value + ';';
+    var title = {fontFamily: value};
+
+    var variants = font.variants.map(function(variant, i) {
+      var slug = variant;
+      var style = '';
+      var fontStyle = 'normal';
+      var fontWeight = '400';
+      var css;
+      var labels = {
+        100: 'Thin',
+        200: 'Extra-Light',
+        300: 'Light',
+        400: 'Normal',
+        500: 'Medium',
+        600: 'Semi-Bold',
+        700: 'Bold',
+        800: 'Extra-Bold',
+        900: 'Ultra-Bold'
+      };
+
+      if (slug == 'regular') {
+        slug = '400';
+      } else if (slug == 'italic') {
+        slug = '400italic';
+        style = 'Italic';
+        fontStyle = 'italic';
+      } else if (slug.length == 3) {
+        fontWeight = slug;
+      } else {
+        style = 'Italic';
+        fontStyle = 'italic';
+        fontWeight = slug.substring(0, 3);
+      }
+
+      return {
+        label: labels[fontWeight],
+        slug: slug,
+        style: style,
+        weight: fontWeight,
+        css: {
+          fontFamily: value,
+          fontStyle: fontStyle,
+          fontWeight: fontWeight
+        }
+      };
+    });
+
+    return (
+      <div className="modal" onClick={this.fade} >
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+        <div className="modal-inner">
+          <h1 style={title} contentEditable>{font.family}</h1>
+          <div>
+            <p><input type="text" onClick={this.select} value={html} /></p>
+            <p><input type="text" onClick={this.select} value={css} /></p>
+            <p><input type="text" onClick={this.select} value={rule} /></p>
+          </div>
+          <div className="variants">
+            <h2>Styles</h2>
+            {variants.map(function(variant, i) {
+              return  <div>
+                        <input type="checkbox" key={i} id={variant.slug} value={variant.slug} onClick={that.setVariants} />
+                        <label htmlFor={variant.slug} style={variant.css} >{variant.label} {variant.weight} {variant.style}</label>
+                      </div>;
+            })}
+          </div>
+          <div className="subsets">
+            <h2>Subsets</h2>
+            {font.subsets.sort().map(function(subset, i) {
+              return  <div>
+                        <input type="checkbox" key={i} id={subset} value={subset} onClick={that.setSubsets} />
+                        <label htmlFor={subset}>{subset}</label>
+                      </div>
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+});
+
 var InfiniteList = React.createClass({
     getInitialState: function() {
       return {
@@ -162,10 +341,12 @@ var InfiniteList = React.createClass({
           var that = this;
 
           for (var i = 0; i < 8; i++) {
-            fonts.push(data.items[i].family);
+            var font = data.items[i];
+            fonts.push(font.family);
           }
 
           WebFont.load({
+            classes: false,
             google: {
               families: fonts
             },
@@ -213,6 +394,10 @@ var InfiniteList = React.createClass({
       }
     },
 
+    modal: function(value) {
+      this.props.setModal(value);
+    },
+
     buildElements: function(start, end) {
       var elements = [];
 
@@ -249,19 +434,26 @@ var InfiniteList = React.createClass({
 
       for (var i = start; i < end; i++) {
         var font = data[i];
-        fonts.push(font.family);
+        var hasRegular = ($.inArray('regular', font.variants) !== -1)
+
+        if (hasRegular) {
+          fonts.push(font.family);
+        } else {
+          fonts.push(font.family + ':' + font.variants[0]);
+        }
       }
 
-      this.setState({matchCount: fonts.length})
+      this.setState({matchCount: fonts.length});
 
       if (fonts.length > 0) {
-        elements.push(<FontGroup key={start} start={start} end={end} data={data} text={this.props.text} display={this.props.display} />)
-
         WebFont.load({
+          classes: false,
           google: {
             families: fonts
           }
         });
+
+        elements.push(<FontGroup key={start} start={start} end={end} data={data} text={this.props.text} display={this.props.display} setModal={this.modal} />)
       }
 
       return elements;

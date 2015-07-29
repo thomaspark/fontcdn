@@ -5,6 +5,7 @@ var App = React.createClass({displayName: "App",
     return {
       data: [],
       search: '',
+      font: {family: '', variants: [], subsets: []},
       display: 'grid',
       groupSize: 900,
       sort: 'popularity',
@@ -29,17 +30,42 @@ var App = React.createClass({displayName: "App",
       }
     }
   },
+  closeModal: function() {
+    $('.modal').removeClass('show');
+  },
+  modal: function(font) {
+    var that = this;
+    var fonts = [];
+    fonts.push(font.family + ':' + font.variants.join(','));
+
+    WebFont.load({
+      classes: false,
+      google: {
+        families: fonts
+      },
+      active: function() {
+        that.setState({font: font});
+        $('.modal')
+          .addClass('show')
+          .find('input[type="checkbox"]').attr('checked', false);
+      }
+    });
+  },
   render: function() {
     return (
       React.createElement("div", null, 
         React.createElement(Settings, {onChange: this.getSettings}), 
-        React.createElement(InfiniteList, {sort: this.state.sort, category: this.state.category, display: this.state.display, search: this.state.search, text: this.state.text, suggestions: this.state.suggestions, groupSize: this.state.groupSize})
+        React.createElement(Modal, {font: this.state.font, onClose: this.closeModal}), 
+        React.createElement(InfiniteList, {sort: this.state.sort, category: this.state.category, display: this.state.display, search: this.state.search, text: this.state.text, suggestions: this.state.suggestions, groupSize: this.state.groupSize, setModal: this.modal})
       )
     );
   }
 });
 
 var FontGroup = React.createClass({displayName: "FontGroup",
+  modal: function(value) {
+    this.props.setModal(value);
+  },
   render: function() {
     var text = $('.text input').val();
     var num = this.props.num;
@@ -52,7 +78,7 @@ var FontGroup = React.createClass({displayName: "FontGroup",
 
     while (fonts.length > 0) {
       var font = fonts.shift();
-      children.push(React.createElement(Font, {font: font, text: text}));
+      children.push(React.createElement(Font, {font: font, text: text, setModal: this.modal}));
       if (children.length == 4) {
         groups.push(React.createElement("div", {className: "fontrow"}, children));
         children = [];
@@ -72,12 +98,15 @@ var FontGroup = React.createClass({displayName: "FontGroup",
 });
 
 var Font = React.createClass({displayName: "Font",
+  modal: function() {
+    this.props.setModal(this.props.font);
+  },
   render: function() {
     var text = this.props.text;
 
     return (
       React.createElement("div", {className: "font"}, 
-        React.createElement("div", {className: "content"}, 
+        React.createElement("div", {className: "content", onClick: this.modal}, 
           React.createElement(FontPreview, {font: this.props.font, text: text}), 
           React.createElement(FontMeta, {font: this.props.font, num: this.props.num})
         )
@@ -127,6 +156,156 @@ var FontMeta = React.createClass({displayName: "FontMeta",
   }
 });
 
+var Modal = React.createClass({displayName: "Modal",
+  getInitialState: function() {
+    return {
+      variants: '',
+      subsets: ''
+    }
+  },
+  componentDidMount: function() {
+    var that = this;
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27) {
+        that.fade();
+      }
+    });
+
+    $('.modal input[type=text]').click(function() {
+       $(this).select();
+    });
+  },
+  fade: function(e) {
+    if ((!e) || (e && $(e.target).hasClass('modal'))) {
+      $(React.findDOMNode(this)).removeClass('show');
+      this.setState({variants: '', subsets: ''});
+    }
+  },
+  setVariants: function(e) {
+    var variants = [];
+    $('.variants input:checked').each(function() {
+      variants.push($(this).val());
+    });
+
+    this.setState({'variants': variants.join(',')});
+  },
+  setSubsets: function(e) {
+    var subsets = [];
+    $('.subsets input:checked').each(function() {
+      subsets.push($(this).val());
+    });
+
+    this.setState({'subsets': subsets.join(',')});
+  },
+  render: function() {
+
+    if (this.props.show == false) {
+      return false;
+    }
+
+    var that = this;
+    var font = this.props.font;
+    var family = font.family.replace(/ /g, '+');
+    var url = 'https://fonts.googleapis.com/css?family=' + family;
+    var category = font.category;
+    var value =  '\'' + font.family + '\', ' + category;
+
+    if (category == 'display' || category == 'handwriting') {
+      category = 'cursive';
+    }
+
+    if (this.state.variants.length > 0) {
+      url = url + ':' + this.state.variants;
+    }
+
+    if (this.state.subsets.length > 0) {
+      url = url + '&subset=' + this.state.subsets;
+    }
+
+    var html = '<link href=\'' + url + '\' rel=\'stylesheet\' type=\'text/css\'>';
+    var css = '@import url(' + url + ');';
+    var rule = 'font-family: ' + value + ';';
+    var title = {fontFamily: value};
+
+    var variants = font.variants.map(function(variant, i) {
+      var slug = variant;
+      var style = '';
+      var fontStyle = 'normal';
+      var fontWeight = '400';
+      var css;
+      var labels = {
+        100: 'Thin',
+        200: 'Extra-Light',
+        300: 'Light',
+        400: 'Normal',
+        500: 'Medium',
+        600: 'Semi-Bold',
+        700: 'Bold',
+        800: 'Extra-Bold',
+        900: 'Ultra-Bold'
+      };
+
+      if (slug == 'regular') {
+        slug = '400';
+      } else if (slug == 'italic') {
+        slug = '400italic';
+        style = 'Italic';
+        fontStyle = 'italic';
+      } else if (slug.length == 3) {
+        fontWeight = slug;
+      } else {
+        style = 'Italic';
+        fontStyle = 'italic';
+        fontWeight = slug.substring(0, 3);
+      }
+
+      return {
+        label: labels[fontWeight],
+        slug: slug,
+        style: style,
+        weight: fontWeight,
+        css: {
+          fontFamily: value,
+          fontStyle: fontStyle,
+          fontWeight: fontWeight
+        }
+      };
+    });
+
+    return (
+      React.createElement("div", {className: "modal", onClick: this.fade}, 
+        React.createElement("link", {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Open+Sans"}), 
+        React.createElement("div", {className: "modal-inner"}, 
+          React.createElement("h1", {style: title, contentEditable: true}, font.family), 
+          React.createElement("div", null, 
+            React.createElement("p", null, React.createElement("input", {type: "text", onClick: this.select, value: html})), 
+            React.createElement("p", null, React.createElement("input", {type: "text", onClick: this.select, value: css})), 
+            React.createElement("p", null, React.createElement("input", {type: "text", onClick: this.select, value: rule}))
+          ), 
+          React.createElement("div", {className: "variants"}, 
+            React.createElement("h2", null, "Styles"), 
+            variants.map(function(variant, i) {
+              return  React.createElement("div", null, 
+                        React.createElement("input", {type: "checkbox", key: i, id: variant.slug, value: variant.slug, onClick: that.setVariants}), 
+                        React.createElement("label", {htmlFor: variant.slug, style: variant.css}, variant.label, " ", variant.weight, " ", variant.style)
+                      );
+            })
+          ), 
+          React.createElement("div", {className: "subsets"}, 
+            React.createElement("h2", null, "Subsets"), 
+            font.subsets.sort().map(function(subset, i) {
+              return  React.createElement("div", null, 
+                        React.createElement("input", {type: "checkbox", key: i, id: subset, value: subset, onClick: that.setSubsets}), 
+                        React.createElement("label", {htmlFor: subset}, subset)
+                      )
+            })
+          )
+        )
+      )
+    );
+  }
+});
+
 var InfiniteList = React.createClass({displayName: "InfiniteList",
     getInitialState: function() {
       return {
@@ -162,10 +341,12 @@ var InfiniteList = React.createClass({displayName: "InfiniteList",
           var that = this;
 
           for (var i = 0; i < 8; i++) {
-            fonts.push(data.items[i].family);
+            var font = data.items[i];
+            fonts.push(font.family);
           }
 
           WebFont.load({
+            classes: false,
             google: {
               families: fonts
             },
@@ -213,6 +394,10 @@ var InfiniteList = React.createClass({displayName: "InfiniteList",
       }
     },
 
+    modal: function(value) {
+      this.props.setModal(value);
+    },
+
     buildElements: function(start, end) {
       var elements = [];
 
@@ -249,19 +434,26 @@ var InfiniteList = React.createClass({displayName: "InfiniteList",
 
       for (var i = start; i < end; i++) {
         var font = data[i];
-        fonts.push(font.family);
+        var hasRegular = ($.inArray('regular', font.variants) !== -1)
+
+        if (hasRegular) {
+          fonts.push(font.family);
+        } else {
+          fonts.push(font.family + ':' + font.variants[0]);
+        }
       }
 
-      this.setState({matchCount: fonts.length})
+      this.setState({matchCount: fonts.length});
 
       if (fonts.length > 0) {
-        elements.push(React.createElement(FontGroup, {key: start, start: start, end: end, data: data, text: this.props.text, display: this.props.display}))
-
         WebFont.load({
+          classes: false,
           google: {
             families: fonts
           }
         });
+
+        elements.push(React.createElement(FontGroup, {key: start, start: start, end: end, data: data, text: this.props.text, display: this.props.display, setModal: this.modal}))
       }
 
       return elements;

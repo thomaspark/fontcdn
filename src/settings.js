@@ -82,7 +82,7 @@ var Search = React.createClass({
     return (
       <div className="search">
         <h2>Search</h2>
-        <input onChange={this.onChange} type="search"/>
+        <input onChange={this.onChange} type="search" />
       </div>
     );
   }
@@ -100,7 +100,6 @@ var Views = React.createClass({
 
 var Sort = React.createClass({
   sort: function(event) {
-    console.log(event.target);
     var value = event.target.textContent.toLowerCase();
     var btn = $(event.target);
 
@@ -117,6 +116,7 @@ var Sort = React.createClass({
         <span onClick={this.sort} className="btn active">Popularity</span>
         <span onClick={this.sort} className="btn">Alpha</span>
         <span onClick={this.sort} className="btn">Date</span>
+        <span onClick={this.sort} className="btn">Style</span>
       </div>
     );
   }

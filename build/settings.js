@@ -100,7 +100,6 @@ var Views = React.createClass({displayName: "Views",
 
 var Sort = React.createClass({displayName: "Sort",
   sort: function(event) {
-    console.log(event.target);
     var value = event.target.textContent.toLowerCase();
     var btn = $(event.target);
 
@@ -116,7 +115,8 @@ var Sort = React.createClass({displayName: "Sort",
         React.createElement("h2", null, "Sort"), 
         React.createElement("span", {onClick: this.sort, className: "btn active"}, "Popularity"), 
         React.createElement("span", {onClick: this.sort, className: "btn"}, "Alpha"), 
-        React.createElement("span", {onClick: this.sort, className: "btn"}, "Date")
+        React.createElement("span", {onClick: this.sort, className: "btn"}, "Date"), 
+        React.createElement("span", {onClick: this.sort, className: "btn"}, "Style")
       )
     );
   }
