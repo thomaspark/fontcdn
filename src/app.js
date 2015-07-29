@@ -41,7 +41,8 @@ var App = React.createClass({
     WebFont.load({
       classes: false,
       google: {
-        families: fonts
+        families: fonts,
+        text: 'acdedghilmnortuxBEILMNSTU0123456789-'
       },
       active: function() {
         that.setState({font: font});
@@ -276,7 +277,7 @@ var Modal = React.createClass({
       <div className="modal" onClick={this.fade} >
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
         <div className="modal-inner">
-          <h1 style={title} contentEditable>{font.family}</h1>
+          <h1 style={title}>{font.family}</h1>
           <div>
             <p><input type="text" onClick={this.select} value={html} /></p>
             <p><input type="text" onClick={this.select} value={css} /></p>
@@ -348,7 +349,8 @@ var InfiniteList = React.createClass({
           WebFont.load({
             classes: false,
             google: {
-              families: fonts
+              families: fonts,
+              text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             },
             active: function() {
               that.handleInfiniteLoad();
@@ -449,7 +451,8 @@ var InfiniteList = React.createClass({
         WebFont.load({
           classes: false,
           google: {
-            families: fonts
+            families: fonts,
+              text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
           }
         });
 

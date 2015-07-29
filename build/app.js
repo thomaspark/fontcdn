@@ -41,7 +41,8 @@ var App = React.createClass({displayName: "App",
     WebFont.load({
       classes: false,
       google: {
-        families: fonts
+        families: fonts,
+        text: 'acdedghilmnortuxBEILMNSTU0123456789-'
       },
       active: function() {
         that.setState({font: font});
@@ -276,7 +277,7 @@ var Modal = React.createClass({displayName: "Modal",
       React.createElement("div", {className: "modal", onClick: this.fade}, 
         React.createElement("link", {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Open+Sans"}), 
         React.createElement("div", {className: "modal-inner"}, 
-          React.createElement("h1", {style: title, contentEditable: true}, font.family), 
+          React.createElement("h1", {style: title}, font.family), 
           React.createElement("div", null, 
             React.createElement("p", null, React.createElement("input", {type: "text", onClick: this.select, value: html})), 
             React.createElement("p", null, React.createElement("input", {type: "text", onClick: this.select, value: css})), 
@@ -348,7 +349,8 @@ var InfiniteList = React.createClass({displayName: "InfiniteList",
           WebFont.load({
             classes: false,
             google: {
-              families: fonts
+              families: fonts,
+              text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
             },
             active: function() {
               that.handleInfiniteLoad();
@@ -449,7 +451,8 @@ var InfiniteList = React.createClass({displayName: "InfiniteList",
         WebFont.load({
           classes: false,
           google: {
-            families: fonts
+            families: fonts,
+              text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
           }
         });
 
