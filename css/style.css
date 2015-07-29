@@ -299,7 +299,7 @@ body.invert .font .preview {
   border: 0px solid transparent;
 }
 
-.font .content:hover .preview span {
+body:not(.row) .font .content:hover .preview span {
   -webkit-transform: translateX(-100%);
   transform: translateX(-100%);
   -webkit-transition: -webkit-transform 10s linear;
