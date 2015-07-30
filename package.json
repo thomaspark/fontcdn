@@ -6,8 +6,16 @@
   "scripts": {
     "watch": "webpack --progress --colors --watch"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thomaspark/fontcdn.git"
+  },
+  "author": "Thomas Park",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thomaspark/fontcdn/issues"
+  },
+  "homepage": "http://fontcdn.org",
   "devDependencies": {
     "jsx-loader": "^0.13.2",
     "webpack": "^1.10.5"
