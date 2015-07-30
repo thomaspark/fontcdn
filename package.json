@@ -1,0 +1,21 @@
+{
+  "name": "fontcdn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app/main.js",
+  "scripts": {
+    "watch": "webpack --progress --colors --watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jsx-loader": "^0.13.2",
+    "webpack": "^1.10.5"
+  },
+  "dependencies": {
+    "font-awesome": "^4.4.0",
+    "react": "^0.13.3",
+    "react-infinite": "^0.4.1",
+    "underscore": "^1.8.3"
+  }
+}
