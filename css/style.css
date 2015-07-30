@@ -150,7 +150,7 @@ input[type=range]::-moz-range-track {
   overflow: auto;
 }
 
-.filters {
+.settings {
   position: fixed;
   left: 0;
   top: 0;
@@ -164,7 +164,7 @@ input[type=range]::-moz-range-track {
   font-weight: 300;
 }
 
-.filters > div {
+.settings > div {
   clear: both;
   margin-bottom: 20px;
 }

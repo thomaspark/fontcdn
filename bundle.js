@@ -22106,7 +22106,7 @@
 	  },
 	  render: function() {
 	    return (
-	      React.createElement("div", {className: "filters"}, 
+	      React.createElement("div", {className: "settings"}, 
 	        React.createElement("h1", null, "FontCDN"), 
 	        React.createElement(Search, {onChange: this.changeSearch}), 
 	        React.createElement(Categories, {onClick: this.setCategory}), 
@@ -22116,7 +22116,6 @@
 	        React.createElement(Sample, {onChange: this.changeText}), 
 	        React.createElement("hr", null), 
 	        React.createElement(About, null)
-
 	      )
 	    );
 	  }

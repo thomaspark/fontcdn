@@ -26,7 +26,7 @@ module.exports = React.createClass({
   },
   render: function() {
     return (
-      <div className="filters">
+      <div className="settings">
         <h1>FontCDN</h1>
         <Search onChange={this.changeSearch} />
         <Categories onClick={this.setCategory} />
@@ -36,7 +36,6 @@ module.exports = React.createClass({
         <Sample onChange={this.changeText} />
         <hr/>
         <About />
-
       </div>
     );
   }
