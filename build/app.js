@@ -73,26 +73,16 @@ var FontGroup = React.createClass({displayName: "FontGroup",
     var start = this.props.start;
     var end = this.props.end;
     var fonts = this.props.data.slice(start, end);
-
-    var groups = [];
     var children = [];
 
     while (fonts.length > 0) {
       var font = fonts.shift();
       children.push(React.createElement(Font, {font: font, text: text, setModal: this.modal}));
-      if (children.length == 4) {
-        groups.push(React.createElement("div", {className: "fontrow"}, children));
-        children = [];
-      }
-    }
-
-    if (children.length > 0) {
-      groups.push(React.createElement("div", {className: "fontrow"}, children));
     }
 
     return (
       React.createElement("div", {className: "fontgroup"}, 
-        groups
+        children
       )
     );
   }
