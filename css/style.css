@@ -262,9 +262,7 @@ body.row .font {
 
 .font .preview {
   position: relative;
-  height: calc(100% - 24px);
   height: 100%;
-  padding-left: 12px;
   color: #000;
   overflow: hidden;
   white-space: nowrap;
@@ -286,6 +284,7 @@ body.invert .font .preview {
   -webkit-align-items: center;
   align-items: center;
   height: 100%;
+  margin-left: 10px;
   -webkit-animation-name: fadeIn;
   -webkit-animation-timing-function: ease-in;
   -webkit-animation-duration: 1s;
@@ -293,10 +292,6 @@ body.invert .font .preview {
   animation-timing-function: ease-in;
   animation-duration: 1s;
   transform: translatez(0);
-}
-
-.font .content:hover {
-  border: 0px solid transparent;
 }
 
 body:not(.row) .font .content:hover .preview span {
@@ -308,7 +303,7 @@ body:not(.row) .font .content:hover .preview span {
 
 .font .meta {
   position: absolute;
-  left: 12px;
+  left: 10px;
   bottom: 6px;
   width: 100%;
   background-color: #9BAEAF;
@@ -389,7 +384,7 @@ body:not(.row) .font .content:hover .preview span {
 .modal input[type="text"] {
   width: 100%;
   padding: 8px 0 4px 8px;
-  border: 1px solid #ccc;
+  background-color: #E5EAEE;;
   font-size: 14px;
   font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
