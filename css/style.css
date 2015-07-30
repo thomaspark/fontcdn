@@ -10,7 +10,7 @@ html, body {
 body {
   margin: 0;
   background-color: #CFD8DC;
-  font-family: 'Helvetica Neue' Helvetica, Arial, sans-serif;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: rgba(255, 255, 255, 0.6);
   transition: background-color 0.3s;
 }
@@ -383,6 +383,7 @@ body:not(.row) .font .content:hover .preview span {
 
 .modal input[type="text"] {
   width: calc(100% - 28px);
+  height: 28px;
   padding: 8px 0 4px 8px;
   background-color: #E5EAEE;
   border-radius: 0 3px 3px 0;
