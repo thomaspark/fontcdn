@@ -2,6 +2,7 @@
 
 var React = require('react');
 var $ = require('jquery');
+var ReactZeroClipboard = require('react-zeroclipboard');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -126,9 +127,24 @@ module.exports = React.createClass({
         <div className="modal-inner">
           <h1 style={title}>{font.family}</h1>
           <div>
-            <p><input type="text" readOnly onClick={this.select} value={html} /></p>
-            <p><input type="text" readOnly onClick={this.select} value={css} /></p>
-            <p><input type="text" readOnly onClick={this.select} value={rule} /></p>
+            <p>
+              <ReactZeroClipboard text={html}>
+                <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
+              </ReactZeroClipboard>
+              <input type="text" readOnly onClick={this.select} value={html} />
+            </p>
+            <p>
+              <ReactZeroClipboard text={css}>
+                <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
+              </ReactZeroClipboard>
+              <input type="text" readOnly onClick={this.select} value={css} />
+            </p>
+            <p>
+              <ReactZeroClipboard text={rule}>
+                <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
+              </ReactZeroClipboard>
+              <input type="text" readOnly onClick={this.select} value={rule} />
+            </p>
           </div>
           <div className="variants">
             <h2>Styles</h2>

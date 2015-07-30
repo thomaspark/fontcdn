@@ -382,9 +382,10 @@ body:not(.row) .font .content:hover .preview span {
 }
 
 .modal input[type="text"] {
-  width: 100%;
+  width: calc(100% - 28px);
   padding: 8px 0 4px 8px;
-  background-color: #E5EAEE;;
+  background-color: #E5EAEE;
+  border-radius: 0 3px 3px 0;
   font-size: 14px;
   font-family: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
 }
@@ -398,6 +399,30 @@ body:not(.row) .font .content:hover .preview span {
 
 .modal .subsets label {
   font-weight: 300;
+}
+
+.modal .copy {
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  background-color: #CFD8DC;
+  border-radius: 3px 0 0 3px;
+  vertical-align: top;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.modal .copy.zeroclipboard-is-hover {
+  background-color: #B8C1C7;
+}
+
+.modal .copy.zeroclipboard-is-active {
+  background-color: #A1A9AE;
+}
+
+.modal .copy .fa {
+  line-height: 28px;
 }
 
 @-webkit-keyframes fadeIn {
