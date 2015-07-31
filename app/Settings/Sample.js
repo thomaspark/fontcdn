@@ -17,26 +17,22 @@ module.exports = React.createClass({
               ]
     };
   },
-
   componentWillMount: function () {
     this.delayedCallback = _.debounce(function(event) {
-      var text = event.target.value;
-      this.props.onChange(text);
+      var value = event.target.value;
+      this.props.onChange({text: value});
     }, 500);
   },
-
   onChange: function (event) {
     event.persist();
     this.delayedCallback(event);
   },
-
   refresh: function() {
-    var newText = this.state.texts.shift();
-    this.state.texts.push(newText);
-    this.props.onChange(newText);
-    React.findDOMNode(this.refs.text).value = newText;
+    var value = this.state.texts.shift();
+    this.state.texts.push(value);
+    React.findDOMNode(this.refs.text).value = value;
+    this.props.onChange({text: value});
   },
-
   render: function() {
     return (
       <div className="text">

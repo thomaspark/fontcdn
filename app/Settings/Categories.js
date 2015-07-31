@@ -6,7 +6,7 @@ var $ = require('jquery');
 module.exports = React.createClass({
   setCategory: function(event) {
     var value = event.target.textContent.toLowerCase();
-    this.props.onClick(value);
+    this.props.onClick({category: value});
 
     $(".categories .btn").removeClass("active");
     $(event.target).addClass("active");

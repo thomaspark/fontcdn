@@ -20437,6 +20437,8 @@
 /* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
+	// jshint ignore: start
+
 	var React = __webpack_require__(2);
 	var WebFont = __webpack_require__(159);
 	var $ = __webpack_require__(160);
@@ -20448,37 +20450,20 @@
 	module.exports = React.createClass({displayName: "module.exports",
 	  getInitialState: function() {
 	    return {
-	      data: [],
 	      search: '',
-	      font: {family: '', variants: [], subsets: []},
-	      display: 'grid',
-	      groupSize: 900,
-	      sort: 'popularity',
-	      text: 'The quick brown fox jumps over the lazy dog.',
 	      category: 'all',
-	      suggestions: {
-	        paragraphs: ['Asap', 'Average', 'Cabin', 'Cardo', 'Crete Round', 'Crimson Text', 'Domine', 'Droid Sans', 'Droid Serif', 'Exo', 'Gentium Book Basic', 'Josefin Slab', 'Kreon', 'Lora', 'Libre Baskerville', 'Merriweather', 'Neuton', 'Noticia Text', 'Old Standard TT', 'Open Sans', 'Poly', 'PT Sans', 'PT Serif', 'Roboto', 'Source Sans', 'Ubuntu', 'Varela', 'Vollkorn'],
-	        headers: ['Abel', 'Arvo', 'Bitter', 'Bree Serif', 'Cabin', 'Droid Sans', 'Droid Serif', 'Gudea', 'Istok Web', 'Lato', 'Lobster', 'Merriweather', 'Montserrat', 'Muli', 'Nunito', 'Open Sans', 'Oswald', 'Pacifico', 'Playfair Display', 'PT Sans', 'PT Serif', 'Quicksand', 'Raleway', 'Roboto', 'Roboto Slab', 'Rokkitt', 'Ubuntu', 'Varela', 'Vollkorn']
-	      }
+	      sort: 'popularity',
+	      display: 'grid',
+	      text: 'The quick brown fox jumps over the lazy dog.',
+	      data: [],
+	      font: {family: '', variants: [], subsets: []},
+	      groupSize: 900
 	    };
 	  },
-	  getSettings: function(prop, value) {
-	    var options = {};
-	    options[prop] = value;
-	    this.setState(options);
-
-	    if (prop == 'display') {
-	      if (value == 'row') {
-	        this.setState({groupSize: 3600});
-	      } else {
-	        this.setState({groupSize: 900});
-	      }
-	    }
+	  getSetting: function(setting) {
+	    this.setState(setting);
 	  },
-	  closeModal: function() {
-	    $('.modal').removeClass('show');
-	  },
-	  modal: function(font) {
+	  setModal: function(font) {
 	    var that = this;
 	    var fonts = [];
 	    fonts.push(font.family + ':' + font.variants.join(','));
@@ -20498,15 +20483,24 @@
 	    });
 	  },
 	  render: function () {
+	    var settings = {
+	          search: this.state.search,
+	          category: this.state.category,
+	          sort: this.state.sort,
+	          text: this.state.text,
+	          groupSize: this.state.groupSize
+	        };
+
 	    return (
 	      React.createElement("div", {id: "app"}, 
-	        React.createElement(Settings, {onChange: this.getSettings}), 
-	        React.createElement(Fonts, {sort: this.state.sort, category: this.state.category, display: this.state.display, search: this.state.search, text: this.state.text, suggestions: this.state.suggestions, groupSize: this.state.groupSize, setModal: this.modal}), 
-	        React.createElement(Modal, {font: this.state.font, onClose: this.closeModal})
+	        React.createElement(Settings, {onChange: this.getSetting}), 
+	        React.createElement(Fonts, {setModal: this.setModal, settings: settings}), 
+	        React.createElement(Modal, {font: this.state.font})
 	      )
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 159 */
@@ -22089,37 +22083,26 @@
 	var About = __webpack_require__(168);
 
 	module.exports = React.createClass({displayName: "module.exports",
-	  changeSearch: function(value) {
-	    this.props.onChange("search", value);
-	  },
-	  changeDisplay: function(value) {
-	    this.props.onChange("display", value);
-	  },
-	  changeText: function(value) {
-	    this.props.onChange("text", value);
-	  },
-	  setCategory: function(value) {
-	    this.props.onChange("category", value);
-	  },
-	  sort: function(value) {
-	    this.props.onChange("sort", value);
+	  changeSetting: function(setting) {
+	    this.props.onChange(setting);
 	  },
 	  render: function() {
 	    return (
 	      React.createElement("div", {className: "settings"}, 
 	        React.createElement("h1", null, "FontCDN"), 
-	        React.createElement(Search, {onChange: this.changeSearch}), 
-	        React.createElement(Categories, {onClick: this.setCategory}), 
+	        React.createElement(Search, {onChange: this.changeSetting}), 
+	        React.createElement(Categories, {onClick: this.changeSetting}), 
 	        React.createElement("hr", null), 
-	        React.createElement(Sort, {onClick: this.sort}), 
-	        React.createElement(Display, {onClick: this.changeDisplay}), 
-	        React.createElement(Sample, {onChange: this.changeText}), 
+	        React.createElement(Sort, {onClick: this.changeSetting}), 
+	        React.createElement(Display, {onClick: this.changeSetting}), 
+	        React.createElement(Sample, {onChange: this.changeSetting}), 
 	        React.createElement("hr", null), 
 	        React.createElement(About, null)
 	      )
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 163 */
@@ -22131,11 +22114,10 @@
 	var _ = __webpack_require__(161);
 
 	module.exports = React.createClass({displayName: "module.exports",
-
 	  componentWillMount: function () {
 	    this.delayedCallback = _.debounce(function(event) {
-	      var text = event.target.value;
-	      this.props.onChange(text);
+	      var value = event.target.value;
+	      this.props.onChange({search: value});
 	    }, 500);
 	  },
 	  onChange: function (event) {
@@ -22152,6 +22134,7 @@
 	  }
 	});
 
+
 /***/ },
 /* 164 */
 /***/ function(module, exports, __webpack_require__) {
@@ -22164,7 +22147,7 @@
 	module.exports = React.createClass({displayName: "module.exports",
 	  setCategory: function(event) {
 	    var value = event.target.textContent.toLowerCase();
-	    this.props.onClick(value);
+	    this.props.onClick({category: value});
 
 	    $(".categories .btn").removeClass("active");
 	    $(event.target).addClass("active");
@@ -22191,6 +22174,7 @@
 	  }
 	});
 
+
 /***/ },
 /* 165 */
 /***/ function(module, exports, __webpack_require__) {
@@ -22208,7 +22192,7 @@
 	    if (!btn.hasClass("active")) {
 	      $(".sort .btn").removeClass("active");
 	      btn.addClass("active");
-	      this.props.onClick(value);
+	      this.props.onClick({sort: value});
 	    }
 	  },
 	  render: function() {
@@ -22224,6 +22208,7 @@
 	  }
 	});
 
+
 /***/ },
 /* 166 */
 /***/ function(module, exports, __webpack_require__) {
@@ -22235,17 +22220,21 @@
 
 	module.exports = React.createClass({displayName: "module.exports",
 	  changeDisplay: function(event) {
-	    var value = event.target.getAttribute('data-value').toLowerCase();
 	    var btn = $(event.target);
 
 	    if (!btn.hasClass("active")) {
+	      var value = event.target.getAttribute('data-value').toLowerCase();
+	      var groupSize = (value == 'grid') ? 900 : 3600;
+
+	      this.props.onClick({display: value});
+	      this.props.onClick({groupSize: groupSize});
+
 	      $(".btn[data-value]").removeClass("active");
 	      btn.addClass("active");
 	      $('body').toggleClass('row');
-	      this.props.onClick(value);
 	    }
 	  },
-	  handleSizeChange: function(event) {
+	  changeSize: function(event) {
 	    var size = $(event.target).val() + "px";
 	    $(".fonts").css("font-size", size);
 	  },
@@ -22253,26 +22242,30 @@
 	    $(event.target).toggleClass("active");
 	    $("body").toggleClass("invert");
 	  },
-	  componentDidMount: function() {
-	    this.setState({value: 30});
-	  },
 	  render: function() {
 	    return (
 	      React.createElement("div", {className: "display"}, 
 	        React.createElement("div", null, 
 	          React.createElement("h2", null, "Display"), 
-	          React.createElement("span", {onClick: this.changeDisplay, "data-value": "grid", className: "btn active", title: "Switch to Grid"}, React.createElement("i", {className: "fa fa-th"})), 
-	          React.createElement("span", {onClick: this.changeDisplay, "data-value": "row", className: "btn", title: "Switch to List"}, React.createElement("i", {className: "fa fa-align-justify"})), 
-	          React.createElement("span", {onClick: this.invert, className: "btn", title: "Invert Colors"}, React.createElement("i", {className: "fa fa-adjust"}))
+	          React.createElement("span", {onClick: this.changeDisplay, "data-value": "grid", className: "btn active", title: "Switch to Grid"}, 
+	            React.createElement("i", {className: "fa fa-th"})
+	          ), 
+	          React.createElement("span", {onClick: this.changeDisplay, "data-value": "row", className: "btn", title: "Switch to List"}, 
+	            React.createElement("i", {className: "fa fa-align-justify"})
+	          ), 
+	          React.createElement("span", {onClick: this.invert, className: "btn", title: "Invert Colors"}, 
+	            React.createElement("i", {className: "fa fa-adjust"})
+	          )
 	        ), 
 	        React.createElement("div", null, 
 	          React.createElement("h2", null, "Preview Size"), 
-	          React.createElement("input", {type: "range", defaultValue: "30", min: "10", max: "80", onChange: this.handleSizeChange})
+	          React.createElement("input", {type: "range", defaultValue: "30", min: "10", max: "80", onChange: this.changeSize})
 	        )
 	      )
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 167 */
@@ -22297,26 +22290,22 @@
 	              ]
 	    };
 	  },
-
 	  componentWillMount: function () {
 	    this.delayedCallback = _.debounce(function(event) {
-	      var text = event.target.value;
-	      this.props.onChange(text);
+	      var value = event.target.value;
+	      this.props.onChange({text: value});
 	    }, 500);
 	  },
-
 	  onChange: function (event) {
 	    event.persist();
 	    this.delayedCallback(event);
 	  },
-
 	  refresh: function() {
-	    var newText = this.state.texts.shift();
-	    this.state.texts.push(newText);
-	    this.props.onChange(newText);
-	    React.findDOMNode(this.refs.text).value = newText;
+	    var value = this.state.texts.shift();
+	    this.state.texts.push(value);
+	    React.findDOMNode(this.refs.text).value = value;
+	    this.props.onChange({text: value});
 	  },
-
 	  render: function() {
 	    return (
 	      React.createElement("div", {className: "text"}, 
@@ -22327,6 +22316,7 @@
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 168 */
@@ -22375,19 +22365,20 @@
 	    return {
 	      elements: [],
 	      isInfiniteLoading: false,
-	      matchCount: 1
+	      matchCount: 1,
+	      suggestions: {
+	        paragraphs: ['Asap', 'Average', 'Cabin', 'Cardo', 'Crete Round', 'Crimson Text', 'Domine', 'Droid Sans', 'Droid Serif', 'Exo', 'Gentium Book Basic', 'Josefin Slab', 'Kreon', 'Lora', 'Libre Baskerville', 'Merriweather', 'Neuton', 'Noticia Text', 'Old Standard TT', 'Open Sans', 'Poly', 'PT Sans', 'PT Serif', 'Roboto', 'Source Sans', 'Ubuntu', 'Varela', 'Vollkorn'],
+	        headers: ['Abel', 'Arvo', 'Bitter', 'Bree Serif', 'Cabin', 'Droid Sans', 'Droid Serif', 'Gudea', 'Istok Web', 'Lato', 'Lobster', 'Merriweather', 'Montserrat', 'Muli', 'Nunito', 'Open Sans', 'Oswald', 'Pacifico', 'Playfair Display', 'PT Sans', 'PT Serif', 'Quicksand', 'Raleway', 'Roboto', 'Roboto Slab', 'Rokkitt', 'Ubuntu', 'Varela', 'Vollkorn']
+	      }
 	    }
 	  },
-
 	  componentDidMount: function() {
 	    this.loadFontData();
 	  },
-
 	  loadFontData: function() {
-	    var url = 'https://www.googleapis.com/webfonts/v1/webfonts?',
-	        key = 'key=AIzaSyDrwscy04xGYMeRyeWOnxXilRnyCafwqHA';
-	    
-	    var sort = this.props.sort;
+	    var url = 'https://www.googleapis.com/webfonts/v1/webfonts?';
+	    var key = 'key=AIzaSyDrwscy04xGYMeRyeWOnxXilRnyCafwqHA';
+	    var sort = this.props.settings.sort;
 	    var opt = 'sort=' + sort + '&';
 	    var req = url + opt + key;
 
@@ -22426,43 +22417,38 @@
 	      }.bind(this)
 	    });
 	  },
-
 	  shouldComponentUpdate: function(nextProps, nextState) {
 	    if (nextState.elements.length == 0 && nextState.matchCount !== 0) {
 	      return false;
+	    } else {
+	      return true;
 	    }
-
-	    return true;
 	  },
-
 	  componentDidUpdate: function(prevProps, prevState) {
-	    var sort = this.props.sort;
-	    var category = this.props.category;
-	    var search = this.props.search;
+	    var sort = this.props.settings.sort;
+	    var category = this.props.settings.category;
+	    var search = this.props.settings.search;
 
-	    if ((sort !== prevProps.sort) || (category !== prevProps.category) || (search !== prevProps.search)) {
+	    if ((sort !== prevProps.settings.sort) || (category !== prevProps.settings.category) || (search !== prevProps.settings.search)) {
 	      this.setState({elements: []});
 	      this.loadFontData();
 	    }
 	  },
-
 	  checkCategory: function(category, font) {
 	    if (category == 'all') {
 	      return true;
 	    }
 
 	    if ((category == 'paragraphs') || (category == 'headers')) {
-	      var suggestions = this.props.suggestions[category];
+	      var suggestions = this.state.suggestions[category];
 	      return ($.inArray(font.family, suggestions) > -1);
 	    } else {
 	      return (font.category == category);
 	    }
 	  },
-
-	  modal: function(value) {
+	  setModal: function(value) {
 	    this.props.setModal(value);
 	  },
-
 	  buildElements: function(start, end) {
 	    var elements = [];
 
@@ -22471,10 +22457,10 @@
 	    }
 
 	    var fonts = [];
-	    var sort = this.props.sort;
-	    var category = this.props.category;
-	    var text = this.props.text;
-	    var search = $.trim(this.props.search.toLowerCase())
+	    var sort = this.props.settings.sort;
+	    var category = this.props.settings.category;
+	    var text = this.props.settings.text;
+	    var search = $.trim(this.props.settings.search.toLowerCase())
 	    var data = this.state.data[sort];
 	    var that = this;
 
@@ -22519,12 +22505,11 @@
 	        }
 	      });
 
-	      elements.push(React.createElement(Batch, {key: start, start: start, end: end, data: data, text: this.props.text, display: this.props.display, setModal: this.modal}))
+	      elements.push(React.createElement(Batch, {setModal: this.setModal, key: start, start: start, end: end, data: data, text: this.props.settings.text}))
 	    }
 
 	    return elements;
 	  },
-
 	  handleInfiniteLoad: function() {
 	    var that = this;
 	    this.setState({
@@ -22540,28 +22525,25 @@
 	      });
 	    }, 0);
 	  },
-
 	  elementInfiniteLoad: function() {
 	    return React.createElement("div", {className: "infinite-list-item"});
 	  },
-
 	  render: function() {
-	    var height = window.innerHeight;
-
 	    return (
 	      React.createElement(Infinite, {className: "fonts", 
-	        elementHeight: 900, 
-	        containerHeight: height, 
+	        elementHeight: this.props.settings.groupSize, 
+	        containerHeight: window.innerHeight, 
 	        infiniteLoadBeginBottomOffset: 200, 
 	        onInfiniteLoad: this.handleInfiniteLoad, 
 	        loadingSpinnerDelegate: this.elementInfiniteLoad(), 
 	        isInfiniteLoading: this.state.isInfiniteLoading
-	        }, 
+	      }, 
 	        this.state.elements
 	      )
 	    );
 	  }
 	});
+
 
 /***/ },
 /* 170 */
@@ -23262,7 +23244,7 @@
 
 	    while (fonts.length > 0) {
 	      var font = fonts.shift();
-	      children.push(React.createElement(Font, {key: font.family, font: font, text: text, setModal: this.modal}));
+	      children.push(React.createElement(Font, {setModal: this.modal, key: fonts.length, font: font, text: text}));
 	    }
 
 	    return (
@@ -23411,7 +23393,6 @@
 	  },
 	  
 	  render: function() {
-
 	    if (this.props.show == false) {
 	      return false;
 	    }
@@ -23420,9 +23401,9 @@
 	    var font = this.props.font;
 	    var family = font.family.replace(/ /g, '+');
 	    var url = 'https://fonts.googleapis.com/css?family=' + family;
+	    var google = 'https://www.google.com/fonts/specimen/' + family;
 	    var category = font.category;
 	    var value =  '\'' + font.family + '\', ' + category;
-	    var google = 'https://www.google.com/fonts/specimen/' + family;
 
 	    if (category == 'display' || category == 'handwriting') {
 	      category = 'cursive';

@@ -11,19 +11,20 @@ module.exports = React.createClass({
     return {
       elements: [],
       isInfiniteLoading: false,
-      matchCount: 1
+      matchCount: 1,
+      suggestions: {
+        paragraphs: ['Asap', 'Average', 'Cabin', 'Cardo', 'Crete Round', 'Crimson Text', 'Domine', 'Droid Sans', 'Droid Serif', 'Exo', 'Gentium Book Basic', 'Josefin Slab', 'Kreon', 'Lora', 'Libre Baskerville', 'Merriweather', 'Neuton', 'Noticia Text', 'Old Standard TT', 'Open Sans', 'Poly', 'PT Sans', 'PT Serif', 'Roboto', 'Source Sans', 'Ubuntu', 'Varela', 'Vollkorn'],
+        headers: ['Abel', 'Arvo', 'Bitter', 'Bree Serif', 'Cabin', 'Droid Sans', 'Droid Serif', 'Gudea', 'Istok Web', 'Lato', 'Lobster', 'Merriweather', 'Montserrat', 'Muli', 'Nunito', 'Open Sans', 'Oswald', 'Pacifico', 'Playfair Display', 'PT Sans', 'PT Serif', 'Quicksand', 'Raleway', 'Roboto', 'Roboto Slab', 'Rokkitt', 'Ubuntu', 'Varela', 'Vollkorn']
+      }
     }
   },
-
   componentDidMount: function() {
     this.loadFontData();
   },
-
   loadFontData: function() {
-    var url = 'https://www.googleapis.com/webfonts/v1/webfonts?',
-        key = 'key=AIzaSyDrwscy04xGYMeRyeWOnxXilRnyCafwqHA';
-    
-    var sort = this.props.sort;
+    var url = 'https://www.googleapis.com/webfonts/v1/webfonts?';
+    var key = 'key=AIzaSyDrwscy04xGYMeRyeWOnxXilRnyCafwqHA';
+    var sort = this.props.settings.sort;
     var opt = 'sort=' + sort + '&';
     var req = url + opt + key;
 
@@ -62,43 +63,38 @@ module.exports = React.createClass({
       }.bind(this)
     });
   },
-
   shouldComponentUpdate: function(nextProps, nextState) {
     if (nextState.elements.length == 0 && nextState.matchCount !== 0) {
       return false;
+    } else {
+      return true;
     }
-
-    return true;
   },
-
   componentDidUpdate: function(prevProps, prevState) {
-    var sort = this.props.sort;
-    var category = this.props.category;
-    var search = this.props.search;
+    var sort = this.props.settings.sort;
+    var category = this.props.settings.category;
+    var search = this.props.settings.search;
 
-    if ((sort !== prevProps.sort) || (category !== prevProps.category) || (search !== prevProps.search)) {
+    if ((sort !== prevProps.settings.sort) || (category !== prevProps.settings.category) || (search !== prevProps.settings.search)) {
       this.setState({elements: []});
       this.loadFontData();
     }
   },
-
   checkCategory: function(category, font) {
     if (category == 'all') {
       return true;
     }
 
     if ((category == 'paragraphs') || (category == 'headers')) {
-      var suggestions = this.props.suggestions[category];
+      var suggestions = this.state.suggestions[category];
       return ($.inArray(font.family, suggestions) > -1);
     } else {
       return (font.category == category);
     }
   },
-
-  modal: function(value) {
+  setModal: function(value) {
     this.props.setModal(value);
   },
-
   buildElements: function(start, end) {
     var elements = [];
 
@@ -107,10 +103,10 @@ module.exports = React.createClass({
     }
 
     var fonts = [];
-    var sort = this.props.sort;
-    var category = this.props.category;
-    var text = this.props.text;
-    var search = $.trim(this.props.search.toLowerCase())
+    var sort = this.props.settings.sort;
+    var category = this.props.settings.category;
+    var text = this.props.settings.text;
+    var search = $.trim(this.props.settings.search.toLowerCase())
     var data = this.state.data[sort];
     var that = this;
 
@@ -155,12 +151,11 @@ module.exports = React.createClass({
         }
       });
 
-      elements.push(<Batch key={start} start={start} end={end} data={data} text={this.props.text} display={this.props.display} setModal={this.modal} />)
+      elements.push(<Batch setModal={this.setModal} key={start} start={start} end={end} data={data} text={this.props.settings.text} />)
     }
 
     return elements;
   },
-
   handleInfiniteLoad: function() {
     var that = this;
     this.setState({
@@ -176,23 +171,19 @@ module.exports = React.createClass({
       });
     }, 0);
   },
-
   elementInfiniteLoad: function() {
     return <div className="infinite-list-item"></div>;
   },
-
   render: function() {
-    var height = window.innerHeight;
-
     return (
       <Infinite className="fonts"
-        elementHeight={900}
-        containerHeight={height}
+        elementHeight={this.props.settings.groupSize}
+        containerHeight={window.innerHeight}
         infiniteLoadBeginBottomOffset={200}
         onInfiniteLoad={this.handleInfiniteLoad}
         loadingSpinnerDelegate={this.elementInfiniteLoad()}
         isInfiniteLoading={this.state.isInfiniteLoading}
-        >
+      >
         {this.state.elements}
       </Infinite>
     );

@@ -18,7 +18,7 @@ module.exports = React.createClass({
 
     while (fonts.length > 0) {
       var font = fonts.shift();
-      children.push(<Font key={font.family} font={font} text={text} setModal={this.modal} />);
+      children.push(<Font setModal={this.modal} key={fonts.length} font={font} text={text} />);
     }
 
     return (

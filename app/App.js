@@ -1,3 +1,5 @@
+// jshint ignore: start
+
 var React = require('react');
 var WebFont = require('webfontloader');
 var $ = require('jquery');
@@ -9,37 +11,20 @@ var Modal = require('./Modal/Modal.js');
 module.exports = React.createClass({
   getInitialState: function() {
     return {
-      data: [],
       search: '',
-      font: {family: '', variants: [], subsets: []},
-      display: 'grid',
-      groupSize: 900,
-      sort: 'popularity',
-      text: 'The quick brown fox jumps over the lazy dog.',
       category: 'all',
-      suggestions: {
-        paragraphs: ['Asap', 'Average', 'Cabin', 'Cardo', 'Crete Round', 'Crimson Text', 'Domine', 'Droid Sans', 'Droid Serif', 'Exo', 'Gentium Book Basic', 'Josefin Slab', 'Kreon', 'Lora', 'Libre Baskerville', 'Merriweather', 'Neuton', 'Noticia Text', 'Old Standard TT', 'Open Sans', 'Poly', 'PT Sans', 'PT Serif', 'Roboto', 'Source Sans', 'Ubuntu', 'Varela', 'Vollkorn'],
-        headers: ['Abel', 'Arvo', 'Bitter', 'Bree Serif', 'Cabin', 'Droid Sans', 'Droid Serif', 'Gudea', 'Istok Web', 'Lato', 'Lobster', 'Merriweather', 'Montserrat', 'Muli', 'Nunito', 'Open Sans', 'Oswald', 'Pacifico', 'Playfair Display', 'PT Sans', 'PT Serif', 'Quicksand', 'Raleway', 'Roboto', 'Roboto Slab', 'Rokkitt', 'Ubuntu', 'Varela', 'Vollkorn']
-      }
+      sort: 'popularity',
+      display: 'grid',
+      text: 'The quick brown fox jumps over the lazy dog.',
+      data: [],
+      font: {family: '', variants: [], subsets: []},
+      groupSize: 900
     };
   },
-  getSettings: function(prop, value) {
-    var options = {};
-    options[prop] = value;
-    this.setState(options);
-
-    if (prop == 'display') {
-      if (value == 'row') {
-        this.setState({groupSize: 3600});
-      } else {
-        this.setState({groupSize: 900});
-      }
-    }
+  getSetting: function(setting) {
+    this.setState(setting);
   },
-  closeModal: function() {
-    $('.modal').removeClass('show');
-  },
-  modal: function(font) {
+  setModal: function(font) {
     var that = this;
     var fonts = [];
     fonts.push(font.family + ':' + font.variants.join(','));
@@ -59,11 +44,19 @@ module.exports = React.createClass({
     });
   },
   render: function () {
+    var settings = {
+          search: this.state.search,
+          category: this.state.category,
+          sort: this.state.sort,
+          text: this.state.text,
+          groupSize: this.state.groupSize
+        };
+
     return (
       <div id="app">
-        <Settings onChange={this.getSettings} />
-        <Fonts sort={this.state.sort} category={this.state.category} display={this.state.display} search={this.state.search} text={this.state.text} suggestions={this.state.suggestions} groupSize={this.state.groupSize} setModal={this.modal} />
-        <Modal font={this.state.font} onClose={this.closeModal} />
+        <Settings onChange={this.getSetting} />
+        <Fonts setModal={this.setModal} settings={settings} />
+        <Modal font={this.state.font} />
       </div>
     );
   }

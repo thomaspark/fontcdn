@@ -4,11 +4,10 @@ var React = require('react');
 var _ = require('underscore');
 
 module.exports = React.createClass({
-
   componentWillMount: function () {
     this.delayedCallback = _.debounce(function(event) {
-      var text = event.target.value;
-      this.props.onChange(text);
+      var value = event.target.value;
+      this.props.onChange({search: value});
     }, 500);
   },
   onChange: function (event) {

@@ -47,7 +47,6 @@ module.exports = React.createClass({
   },
   
   render: function() {
-
     if (this.props.show == false) {
       return false;
     }
@@ -56,9 +55,9 @@ module.exports = React.createClass({
     var font = this.props.font;
     var family = font.family.replace(/ /g, '+');
     var url = 'https://fonts.googleapis.com/css?family=' + family;
+    var google = 'https://www.google.com/fonts/specimen/' + family;
     var category = font.category;
     var value =  '\'' + font.family + '\', ' + category;
-    var google = 'https://www.google.com/fonts/specimen/' + family;
 
     if (category == 'display' || category == 'handwriting') {
       category = 'cursive';

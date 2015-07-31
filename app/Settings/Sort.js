@@ -11,7 +11,7 @@ module.exports = React.createClass({
     if (!btn.hasClass("active")) {
       $(".sort .btn").removeClass("active");
       btn.addClass("active");
-      this.props.onClick(value);
+      this.props.onClick({sort: value});
     }
   },
   render: function() {
