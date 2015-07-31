@@ -23422,6 +23422,7 @@
 	    var url = 'https://fonts.googleapis.com/css?family=' + family;
 	    var category = font.category;
 	    var value =  '\'' + font.family + '\', ' + category;
+	    var google = 'https://www.google.com/fonts/specimen/' + family;
 
 	    if (category == 'display' || category == 'handwriting') {
 	      category = 'cursive';
@@ -23489,7 +23490,7 @@
 	      React.createElement("div", {className: "modal", onClick: this.fade}, 
 	        React.createElement("link", {rel: "stylesheet", href: "https://fonts.googleapis.com/css?family=Open+Sans"}), 
 	        React.createElement("div", {className: "modal-inner"}, 
-	          React.createElement("h1", {style: title}, font.family), 
+	          React.createElement("h1", {style: title}, React.createElement("a", {target: "_blank", href: google}, font.family)), 
 	          React.createElement("div", null, 
 	            React.createElement("p", null, 
 	              React.createElement(ReactZeroClipboard, {text: html}, 

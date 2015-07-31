@@ -36,7 +36,6 @@ h2 {
 
 a {
   color: rgba(255, 255, 255, 0.6);
-  font-weight: bold;
   text-decoration: none;
   transition: color 0.3s;
 }
@@ -143,6 +142,10 @@ input[type=range]::-moz-range-track {
   display: inline-block;
   margin: 0 8px 8px;
   font-size: 24px;
+}
+
+.about a {
+  font-weight: 500;
 }
 
 #app {
@@ -373,6 +376,10 @@ body:not(.row) .font .content:hover .preview span {
   font-size: 42px;
   font-weight: 400;
   text-align: left;
+}
+
+.modal a {
+  color: #000;
 }
 
 .modal h2 {

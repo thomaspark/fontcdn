@@ -58,6 +58,7 @@ module.exports = React.createClass({
     var url = 'https://fonts.googleapis.com/css?family=' + family;
     var category = font.category;
     var value =  '\'' + font.family + '\', ' + category;
+    var google = 'https://www.google.com/fonts/specimen/' + family;
 
     if (category == 'display' || category == 'handwriting') {
       category = 'cursive';
@@ -125,7 +126,7 @@ module.exports = React.createClass({
       <div className="modal" onClick={this.fade} >
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
         <div className="modal-inner">
-          <h1 style={title}>{font.family}</h1>
+          <h1 style={title}><a target="_blank" href={google}>{font.family}</a></h1>
           <div>
             <p>
               <ReactZeroClipboard text={html}>
