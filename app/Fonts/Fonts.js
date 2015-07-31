@@ -147,7 +147,7 @@ module.exports = React.createClass({
         classes: false,
         google: {
           families: fonts,
-            text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+          text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         }
       });
 

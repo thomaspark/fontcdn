@@ -45,7 +45,7 @@ module.exports = React.createClass({
 
     this.setState({'subsets': subsets.join(',')});
   },
-  
+
   render: function() {
     if (this.props.show == false) {
       return false;

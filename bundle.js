@@ -22501,7 +22501,7 @@
 	        classes: false,
 	        google: {
 	          families: fonts,
-	            text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+	          text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	        }
 	      });
 
@@ -23391,7 +23391,7 @@
 
 	    this.setState({'subsets': subsets.join(',')});
 	  },
-	  
+
 	  render: function() {
 	    if (this.props.show == false) {
 	      return false;
