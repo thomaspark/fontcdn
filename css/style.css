@@ -218,17 +218,9 @@ input[type=range]::-moz-range-track {
   text-align: center;
 }
 
-.views,
 .fonts {
   margin-left: 250px;
   min-width: 650px;
-}
-
-.views {
-  height: 100px;
-  padding: 20px;
-  background-color: #ccc;
-  color: #999;
 }
 
 .fonts {
