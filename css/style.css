@@ -220,7 +220,7 @@ input[type=range]::-moz-range-track {
 
 .fonts {
   margin-left: 250px;
-  min-width: 650px;
+  min-width: 500px;
 }
 
 .fonts {
@@ -233,7 +233,6 @@ input[type=range]::-moz-range-track {
   float: left;
   width: 25%;
   height: 150px;
-  min-width: 150px;
   padding: 10px;
 }
 
@@ -338,6 +337,7 @@ body:not(.row) .font .content:hover .preview span {
 .modal.show {
   background-color: rgba(0, 0, 0, 0.7);
   pointer-events: auto;
+  cursor: pointer;
 }
 
 .modal-inner {
