@@ -47,10 +47,6 @@ module.exports = React.createClass({
   },
 
   render: function() {
-    if (this.props.show == false) {
-      return false;
-    }
-
     var that = this;
     var font = this.props.font;
     var family = font.family.replace(/ /g, '+');
@@ -81,7 +77,6 @@ module.exports = React.createClass({
       var style = '';
       var fontStyle = 'normal';
       var fontWeight = '400';
-      var css;
       var labels = {
         100: 'Thin',
         200: 'Extra-Light',

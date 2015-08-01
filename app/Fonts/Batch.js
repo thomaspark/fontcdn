@@ -10,7 +10,6 @@ module.exports = React.createClass({
   },
   render: function() {
     var text = $('.text input').val();
-    var num = this.props.num;
     var start = this.props.start;
     var end = this.props.end;
     var fonts = this.props.data.slice(start, end);

@@ -3,7 +3,6 @@
 var React = require('react');
 var WebFont = require('webfontloader');
 var $ = require('jquery');
-var _ = require('underscore');
 var Settings = require('./Settings/Settings.js');
 var Fonts = require('./Fonts/Fonts.js');
 var Modal = require('./Modal/Modal.js');

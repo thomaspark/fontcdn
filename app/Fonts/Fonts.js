@@ -151,7 +151,7 @@ module.exports = React.createClass({
         }
       });
 
-      elements.push(<Batch setModal={this.setModal} key={start} start={start} end={end} data={data} text={this.props.settings.text} />)
+      elements.push(<Batch setModal={this.setModal} key={start} start={start} end={end} data={data} text={text} />)
     }
 
     return elements;
