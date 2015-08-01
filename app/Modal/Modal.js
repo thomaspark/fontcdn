@@ -51,9 +51,7 @@ module.exports = React.createClass({
     var font = this.props.font;
     var family = font.family.replace(/ /g, '+');
     var url = 'https://fonts.googleapis.com/css?family=' + family;
-    var google = 'https://www.google.com/fonts/specimen/' + family;
     var category = font.category;
-    var value =  '\'' + font.family + '\', ' + category;
 
     if (category == 'display' || category == 'handwriting') {
       category = 'cursive';
@@ -67,9 +65,11 @@ module.exports = React.createClass({
       url = url + '&subset=' + this.state.subsets;
     }
 
+    var value =  '\'' + font.family + '\', ' + category;
     var html = '<link href=\'' + url + '\' rel=\'stylesheet\' type=\'text/css\'>';
     var css = '@import url(' + url + ');';
     var rule = 'font-family: ' + value + ';';
+    var google = 'https://www.google.com/fonts/specimen/' + family;
     var title = {fontFamily: value};
 
     var variants = font.variants.map(function(variant, i) {
