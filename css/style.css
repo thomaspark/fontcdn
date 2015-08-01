@@ -349,6 +349,7 @@ body:not(.row) .font .content:hover .preview span {
   padding: 2em;
   border-radius: 6px;
   overflow-y: auto;
+  cursor: auto;
   -webkit-transition: 0.3s;
   transition: 0.3s;
   -webkit-transform: translateY(-150%);
