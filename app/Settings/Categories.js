@@ -26,7 +26,7 @@ module.exports = React.createClass({
         <div>
           <h2>Suggestions</h2>
           <span onClick={this.setCategory} className="btn">Paragraphs</span>
-          <span onClick={this.setCategory} className="btn">Headers</span>
+          <span onClick={this.setCategory} className="btn">Headings</span>
         </div>
       </div>
     );
