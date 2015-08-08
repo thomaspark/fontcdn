@@ -26,7 +26,7 @@ module.exports = React.createClass({
   setModal: function(font) {
     var that = this;
     var fonts = [];
-    fonts.push(font.family + ':' + font.variants.join(','));
+    fonts.push(font.family + ':' + font.variants.join(',') + ':' + font.subsets.join(','));
 
     WebFont.load({
       classes: false,
