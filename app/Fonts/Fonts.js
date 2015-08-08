@@ -11,6 +11,7 @@ module.exports = React.createClass({
     return {
       elements: [],
       isInfiniteLoading: false,
+      groupSize: Math.max(24, Math.ceil(window.innerHeight / 150) * 4),
       matchCount: 1,
       suggestions: {
         paragraphs: ['Alegreya', 'Asap', 'Average', 'Cabin', 'Cardo', 'Crete Round', 'Crimson Text', 'Domine', 'Droid Sans', 'Droid Serif', 'Exo', 'Gentium Book Basic', 'Josefin Slab', 'Kreon', 'Lora', 'Libre Baskerville', 'Merriweather', 'Neuton', 'Noticia Text', 'Old Standard TT', 'Open Sans', 'Poly', 'PT Sans', 'PT Serif', 'Roboto', 'Source Sans Pro', 'Ubuntu', 'Varela', 'Vollkorn', 'Work Sans'],
@@ -162,9 +163,10 @@ module.exports = React.createClass({
       isInfiniteLoading: true
     });
     setTimeout(function() {
-      var groupSize = 24;
-      var elemLength = that.state.elements.length * groupSize,
-        newElements = that.buildElements(elemLength, elemLength + 24);
+      var groupSize = that.state.groupSize;
+      var elemLength = that.state.elements.length * groupSize;
+      var newElements = that.buildElements(elemLength, elemLength + groupSize);
+
       that.setState({
         isInfiniteLoading: false,
         elements: that.state.elements.concat(newElements)
