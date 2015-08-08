@@ -110,6 +110,10 @@ input[type=range]::-moz-range-track {
   border-radius: 3px;
 }
 
+.size {
+  float: right;
+}
+
 .btn {
   display: inline-block;
   margin: 0 4px 4px 0;

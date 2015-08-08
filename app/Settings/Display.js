@@ -20,8 +20,9 @@ module.exports = React.createClass({
     }
   },
   changeSize: function(event) {
-    var size = $(event.target).val() + "px";
-    $(".fonts").css("font-size", size);
+    var size = $(event.target).val() + 'px';
+    $('.fonts').css('font-size', size);
+    $('.size').text(size);
   },
   invert: function(event) {
     $(event.target).toggleClass("active");
@@ -43,6 +44,7 @@ module.exports = React.createClass({
           </span>
         </div>
         <div>
+          <span className="size">30px</span>
           <h2>Preview Size</h2>
           <input type="range" defaultValue="30" min="10" max="80" onChange={this.changeSize} />
         </div>
