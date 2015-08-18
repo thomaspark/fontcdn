@@ -33,10 +33,10 @@ module.exports = React.createClass({
       <div className="display">
         <div>
           <h2>Display</h2>
-          <span onClick={this.changeDisplay} data-value="grid" className="btn active" title="Switch to Grid">
+          <span onClick={this.changeDisplay} data-value="grid" className="btn btn-grid active" title="Switch to Grid">
             <i className="fa fa-th"></i>
           </span>
-          <span onClick={this.changeDisplay} data-value="row" className="btn" title="Switch to List">
+          <span onClick={this.changeDisplay} data-value="row" className="btn btn-row" title="Switch to List">
             <i className="fa fa-align-justify"></i>
           </span>
           <span onClick={this.invert} className="btn" title="Invert Colors">
