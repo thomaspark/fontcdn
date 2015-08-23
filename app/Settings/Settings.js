@@ -15,7 +15,7 @@ module.exports = React.createClass({
   render: function() {
     return (
       <div className="settings">
-        <h1>FontCDN</h1>
+        <h1><a href="./">FontCDN</a></h1>
         <Search onChange={this.changeSetting} />
         <Categories onClick={this.changeSetting} />
         <hr/>

@@ -180,6 +180,10 @@ input[type=range]::-moz-range-track {
   font-weight: 300;
 }
 
+.settings h1 > a {
+  color: #ECEFF1;
+}
+
 .settings > div {
   clear: both;
   margin-bottom: 20px;
