@@ -12,6 +12,7 @@ module.exports = React.createClass({
     return {
       search: '',
       category: 'all',
+      filterType: 'category',
       sort: 'popularity',
       display: 'grid',
       text: 'The quick brown fox jumps over the lazy dog.',
@@ -46,6 +47,7 @@ module.exports = React.createClass({
     var settings = {
           search: this.state.search,
           category: this.state.category,
+          filterType: this.state.filterType,
           sort: this.state.sort,
           text: this.state.text,
           groupSize: this.state.groupSize

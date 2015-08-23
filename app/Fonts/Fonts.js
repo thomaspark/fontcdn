@@ -81,16 +81,21 @@ module.exports = React.createClass({
       this.loadFontData();
     }
   },
-  checkCategory: function(category, font) {
+  checkCategory: function(font) {
+    var category = this.props.settings.category;
+    var filterType = this.props.settings.filterType;
+
     if (category == 'all') {
       return true;
     }
 
-    if ((category == 'paragraphs') || (category == 'headings')) {
+    if (filterType === 'category') {
+      return (font.category == category);
+    } else if (filterType === 'suggestion') {
       var suggestions = this.state.suggestions[category];
       return ($.inArray(font.family, suggestions) > -1);
-    } else {
-      return (font.category == category);
+    } else if (filterType === 'subset') {
+      return ($.inArray(category, font.subsets) > -1);
     }
   },
   setModal: function(value) {
@@ -106,6 +111,7 @@ module.exports = React.createClass({
     var fonts = [];
     var sort = this.props.settings.sort;
     var category = this.props.settings.category;
+    var filterType = this.props.settings.filterType;
     var text = this.props.settings.text;
     var search = $.trim(this.props.settings.search.toLowerCase())
     var data = this.state.data[sort];
@@ -116,7 +122,7 @@ module.exports = React.createClass({
         var isCategory = true,
             isMatch = true;
 
-        isCategory = that.checkCategory(category, elem);
+        isCategory = that.checkCategory(elem);
 
         if (search.length > 0) {
           isMatch = (elem.family.toLowerCase().indexOf(search) !== -1);
@@ -132,12 +138,22 @@ module.exports = React.createClass({
 
     for (var i = start; i < end; i++) {
       var font = data[i];
-      var hasRegular = ($.inArray('regular', font.variants) !== -1)
+      var hasRegular = ($.inArray('regular', font.variants) !== -1);
+      var hasLatin = ($.inArray('latin', font.variants) !== -1);
+      var subsets = '';
+
+      if (filterType === 'subset' && category !== 'latin') {
+        if ($.inArray('latin', font.subsets) !== -1) {
+          subsets = ':latin,' + category;
+        } else {
+          subsets = ':' + category;
+        }
+      }
 
       if (hasRegular) {
-        fonts.push(font.family);
+        fonts.push(font.family + subsets);
       } else {
-        fonts.push(font.family + ':' + font.variants[0]);
+        fonts.push(font.family + ':' + font.variants[0] + subsets);
       }
     }
 
@@ -147,8 +163,7 @@ module.exports = React.createClass({
       WebFont.load({
         classes: false,
         google: {
-          families: fonts,
-          text: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+          families: fonts
         }
       });
 

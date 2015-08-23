@@ -114,7 +114,8 @@ input[type=range]::-moz-range-track {
   float: right;
 }
 
-.btn {
+.btn,
+.dropdown-toggle {
   display: inline-block;
   margin: 0 4px 4px 0;
   padding: 6px 7px;
@@ -132,7 +133,8 @@ input[type=range]::-moz-range-track {
   color: #fff;
 }
 
-.btn.active {
+.btn.active,
+.dropdown-toggle.active {
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
 }
@@ -209,6 +211,16 @@ input[type=range]::-moz-range-track {
 
 .display h2 {
   margin-top: 0;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  padding: 10px 10px 6px;
+  background-color: #0662A3;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3), 0 -1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .text input[type="text"] {
