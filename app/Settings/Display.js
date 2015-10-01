@@ -46,7 +46,7 @@ module.exports = React.createClass({
         <div>
           <span className="size">30px</span>
           <h2>Preview Size</h2>
-          <input type="range" defaultValue="30" min="10" max="80" onChange={this.changeSize} />
+          <input type="range" defaultValue="30" min="1" max="80" onChange={this.changeSize} />
         </div>
       </div>
     );
