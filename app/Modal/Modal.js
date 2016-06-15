@@ -69,7 +69,7 @@ module.exports = React.createClass({
     var html = '<link href=\'' + url + '\' rel=\'stylesheet\' type=\'text/css\'>';
     var css = '@import url(' + url + ');';
     var rule = 'font-family: ' + value + ';';
-    var google = 'https://www.google.com/fonts/specimen/' + family;
+    var google = 'https://fonts.google.com/specimen/' + family;
     var title = {fontFamily: value};
 
     var variants = font.variants.map(function(variant, i) {
