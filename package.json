@@ -21,7 +21,6 @@
     "webpack": "^1.10.5"
   },
   "dependencies": {
-    "font-awesome": "^4.4.0",
     "react": "^0.13.3",
     "react-infinite": "^0.4.1",
     "react-zeroclipboard": "^2.0.1",
