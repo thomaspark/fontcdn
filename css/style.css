@@ -434,7 +434,7 @@ body:not(.row) .font .content:hover .preview span {
   font-weight: 300;
 }
 
-.modal .copy {
+.modal button[data-clipboard-text] {
   display: inline-block;
   width: 28px;
   height: 28px;
@@ -446,16 +446,12 @@ body:not(.row) .font .content:hover .preview span {
   cursor: pointer;
 }
 
-.modal .copy.zeroclipboard-is-hover {
+.modal button[data-clipboard-text]:hover {
   background-color: #B8C1C7;
 }
 
-.modal .copy.zeroclipboard-is-active {
+.modal button[data-clipboard-text]:active {
   background-color: #A1A9AE;
-}
-
-.modal .copy .fa {
-  line-height: 28px;
 }
 
 @-webkit-keyframes fadeIn {

@@ -2,7 +2,7 @@
 
 var React = require('react');
 var $ = require('jquery');
-var ReactZeroClipboard = require('react-zeroclipboard');
+var ClipboardButton = require('react-clipboard.js');
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -123,21 +123,21 @@ module.exports = React.createClass({
           <h1 style={title}><a target="_blank" href={google}>{font.family}</a></h1>
           <div>
             <p>
-              <ReactZeroClipboard text={html}>
+              <ClipboardButton data-clipboard-text={html}>
                 <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
-              </ReactZeroClipboard>
+              </ClipboardButton>
               <input type="text" readOnly onClick={this.select} value={html} />
             </p>
             <p>
-              <ReactZeroClipboard text={css}>
+              <ClipboardButton data-clipboard-text={css}>
                 <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
-              </ReactZeroClipboard>
+              </ClipboardButton>
               <input type="text" readOnly onClick={this.select} value={css} />
             </p>
             <p>
-              <ReactZeroClipboard text={rule}>
+              <ClipboardButton data-clipboard-text={rule}>
                 <span className="copy" title="Copy to Clipboard"><i className="fa fa-clipboard"></i></span>
-              </ReactZeroClipboard>
+              </ClipboardButton>
               <input type="text" readOnly onClick={this.select} value={rule} />
             </p>
           </div>
