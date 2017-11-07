@@ -439,6 +439,7 @@ body:not(.row) .font .content:hover .preview span {
   width: 28px;
   height: 28px;
   background-color: #CFD8DC;
+  border: none;
   border-radius: 3px 0 0 3px;
   vertical-align: top;
   text-align: center;
