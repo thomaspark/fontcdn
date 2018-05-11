@@ -9,6 +9,8 @@ var Modal = require('./Modal/Modal.js');
 
 module.exports = React.createClass({
   getInitialState: function() {
+    var stars = localStorage.getItem('stars');
+
     return {
       search: '',
       category: 'all',
@@ -18,11 +20,16 @@ module.exports = React.createClass({
       text: 'The quick brown fox jumps over the lazy dog.',
       data: [],
       font: {family: '', variants: [], subsets: []},
+      stars: stars ? JSON.parse(stars) : [],
       groupSize: 900
     };
   },
   getSetting: function(setting) {
     this.setState(setting);
+  },
+  setStars: function(stars) {
+    this.setState(stars);
+    localStorage.setItem('stars', JSON.stringify(stars));
   },
   setModal: function(font) {
     var that = this;
@@ -50,14 +57,15 @@ module.exports = React.createClass({
           filterType: this.state.filterType,
           sort: this.state.sort,
           text: this.state.text,
-          groupSize: this.state.groupSize
+          groupSize: this.state.groupSize,
+          stars: this.state.stars
         };
 
     return (
       <div id="app">
         <Settings onChange={this.getSetting} />
-        <Fonts setModal={this.setModal} settings={settings} />
-        <Modal font={this.state.font} />
+        <Fonts setModal={this.setModal} settings={settings} stars={this.state.stars} onChange={this.setStars} />
+        <Modal font={this.state.font} stars={this.state.stars} onChange={this.setStars} />
       </div>
     );
   }

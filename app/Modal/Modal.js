@@ -45,6 +45,23 @@ module.exports = React.createClass({
 
     this.setState({'subsets': subsets.join(',')});
   },
+  setStar: function(e) {
+    var target = $(e.target);
+    var stars = this.props.stars;
+    var family = this.props.font.family;
+
+    var index = stars.indexOf(family);
+
+    if (index < 0) {
+      stars.push(family);
+      target.addClass('fa-star').removeClass('fa-star-o');
+    } else {
+      stars.splice(index, 1);
+      target.addClass('fa-star-o').removeClass('fa-star');
+    }
+
+    this.props.onChange(stars);
+  },
 
   render: function() {
     var that = this;
@@ -52,6 +69,8 @@ module.exports = React.createClass({
     var family = font.family.replace(/ /g, '+');
     var url = 'https://fonts.googleapis.com/css?family=' + family;
     var category = font.category;
+    var stars = this.props.stars;
+    var starred = stars.includes(font.family) ? 'fa star fa-star' : 'fa star fa-star-o';
 
     if (category == 'display' || category == 'handwriting') {
       category = 'cursive';
@@ -120,7 +139,7 @@ module.exports = React.createClass({
       <div className="modal" onClick={this.fade} >
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
         <div className="modal-inner">
-          <h1 style={title}><a target="_blank" href={google}>{font.family}</a></h1>
+          <h1 style={title}><a target="_blank" href={google}>{font.family}</a><span onClick={this.setStar} className={starred}></span></h1>
           <div>
             <p>
               <ClipboardButton data-clipboard-text={html}>

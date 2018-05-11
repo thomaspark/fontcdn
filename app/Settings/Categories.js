@@ -34,6 +34,7 @@ module.exports = React.createClass({
           <span onClick={this.setCategory} className="btn" data-type="category" data-val="display">Display</span>
           <span onClick={this.setCategory} className="btn" data-type="category" data-val="handwriting">Handwriting</span>
           <span onClick={this.setCategory} className="btn" data-type="category" data-val="monospace">Monospace</span>
+          <span onClick={this.setCategory} className="btn" data-type="category" data-val="stars"><i className="fa fa-star"></i></span>
         </div>
         <div>
           <h2>Suggestions</h2>

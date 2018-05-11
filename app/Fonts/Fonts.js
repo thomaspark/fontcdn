@@ -89,7 +89,10 @@ module.exports = React.createClass({
       return true;
     }
 
-    if (filterType === 'category') {
+    if (category === 'stars') {
+      var stars = this.props.stars;
+      return ($.inArray(font.family, stars) > -1);
+    } else if (filterType === 'category') {
       return (font.category == category);
     } else if (filterType === 'suggestion') {
       var suggestions = this.state.suggestions[category];
@@ -100,6 +103,9 @@ module.exports = React.createClass({
   },
   setModal: function(value) {
     this.props.setModal(value);
+  },
+  setStars: function(value) {
+    this.props.onChange(value);
   },
   buildElements: function(start, end) {
     var elements = [];
@@ -115,6 +121,7 @@ module.exports = React.createClass({
     var text = this.props.settings.text;
     var search = $.trim(this.props.settings.search.toLowerCase())
     var data = this.state.data[sort];
+    var stars = this.props.stars;
     var that = this;
 
     if ((category !== "all") || search.length > 0) {
@@ -167,7 +174,7 @@ module.exports = React.createClass({
         }
       });
 
-      elements.push(<Batch setModal={this.setModal} key={start} start={start} end={end} data={data} text={text} />)
+      elements.push(<Batch setModal={this.setModal} key={start} start={start} end={end} data={data} text={text} stars={stars} onChange={this.setStars} />)
     }
 
     return elements;

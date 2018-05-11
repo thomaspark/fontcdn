@@ -346,6 +346,16 @@ body:not(.row) .font .content:hover .preview span {
   text-overflow: ellipsis;
 }
 
+.font .star {
+  position: absolute;
+  right: 6px;
+  top: 6px;
+  font-size: 16px;
+  color: #888;
+  cursor: pointer;
+  z-index: 110;
+}
+
 .modal {
   position: fixed;
   z-index: 300;
@@ -453,6 +463,12 @@ body:not(.row) .font .content:hover .preview span {
 
 .modal button[data-clipboard-text]:active {
   background-color: #A1A9AE;
+}
+
+.modal .star {
+  float: right;
+  font-size: 2rem;
+  cursor: pointer;
 }
 
 @-webkit-keyframes fadeIn {
