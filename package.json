@@ -23,8 +23,8 @@
   "dependencies": {
     "font-awesome": "^4.4.0",
     "react": "^0.13.3",
+    "react-clipboard.js": "1.1.2",
     "react-infinite": "^0.4.1",
-    "react-clipboard.js": "^1.1.2",
     "underscore": "^1.8.3"
   }
 }
