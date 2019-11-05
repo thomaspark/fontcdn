@@ -17,7 +17,7 @@ module.exports = React.createClass({
             <i className="fa fa-facebook"></i>
           </a>
         </p>
-        <p>Made by <a href="http://thomaspark.co">Thomas Park</a></p>
+        <p>Made by <a href="http://thomaspark.co">Thomas Park</a> • <a href="https://github.com/sponsors/thomaspark/">Sponsor Me</a></p>
         <p>Check out <a href="http://glyphsearch.com">GlyphSearch</a> &amp; <a href="https://bootswatch.com">Bootswatch</a></p>
       </div>
     );
