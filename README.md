@@ -4,7 +4,7 @@
 FontCDN
 =======
 
-FontCDN is a search tool for [Google Fonts](https://www.google.com/fonts). Check it out at [fontcdn.org](http://fontcdn.org).
+FontCDN is a search tool for [Google Fonts](https://www.google.com/fonts). Check it out at [https://thomaspark.co/projects/fontcdn/](https://thomaspark.co/projects/fontcdn/).
 
 ## Author
 
